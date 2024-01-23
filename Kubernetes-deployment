@@ -1,3 +1,6 @@
+#Prerequisite is to install docker on your system 
+we can install the docker desktop 
+
 AS we need to deploy the ml model on the kubernetes we need a Ml Model .then we we need to create an image of the model .push on the docker
 hub registry .Follow the below steps to deploy the scalble ML models on the kubernetes.
 kubernetes also know as the k8s(kubernetes).
@@ -49,4 +52,5 @@ kubectl expose deployment kubermatic-dl-deployment  --type=LoadBalancer --port 8
 #kubectl get service
 
 #last thing is to pray for the god :(
+
 
