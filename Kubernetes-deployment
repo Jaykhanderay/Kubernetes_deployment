@@ -1,0 +1,52 @@
+AS we need to deploy the ml model on the kubernetes we need a Ml Model .then we we need to create an image of the model .push on the docker
+hub registry .Follow the below steps to deploy the scalble ML models on the kubernetes.
+kubernetes also know as the k8s(kubernetes).
+
+step1) Pull the docker image from the dockerhub registry
+# docker pull robydv/kubermatic-dl
+
+step2) Now we need to run the container for the image 
+# docker run -d -p 5000:5000 robydv/kubermatic-dl
+
+step3) now check that our Image is running into container or not
+# use command docker ps -a 
+
+step4) Now it's time to install the minikube for the kubernetes . and kubectl 
+use the following commands
+open the powershell & run the powershell as the administrator [Run as administrator]
+
+Paste the below command 
+#New-Item -Path 'c:\' -Name 'minikube' -ItemType Directory -Force
+Invoke-WebRequest -OutFile 'c:\minikube\minikube.exe' -Uri 'https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe' -UseBasicParsing
+
+Now after the succesfully installed paste the below command again to set the environmen variable in the powershell
+# $oldPath = [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::Machine)
+if ($oldPath.Split(';') -inotcontains 'C:\minikube'){
+  [Environment]::SetEnvironmentVariable('Path', $('{0};C:\minikube' -f $oldPath), [EnvironmentVariableTarget]::Machine)
+}
+
+Now our minikube is installed 
+Now it time to install the kubectl 
+# curl.exe -LO "https://dl.k8s.io/release/v1.29.1/bin/windows/amd64/kubectl.exe"
+
+Go to the command prompt or any editor you want open terminal and paste the below command
+
+1) #minikube version:- it will show the version of the minikube
+2) minikube start 
+now your cluster has been setup
+if error has come you can setup the k8s cluster by the two way
+
+# minikube start --driver=virtualbox
+#vminikube start --driver=docker
+
+now its time to apply the deployment.yaml file for the image
+# kubectl apply -f deployment.yaml
+
+#you can get the deployment.yaml file from my github account.
+
+kubectl expose deployment kubermatic-dl-deployment  --type=LoadBalancer --port 80 --target-port 5000
+
+#kubectl get service
+
+#last thing is to pray for the god :(
+
